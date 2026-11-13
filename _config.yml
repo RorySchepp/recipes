@@ -1,0 +1,19 @@
+# Private recipe site, served at https://schepp.ca/recipes/
+title: Recipes
+url: "https://schepp.ca"
+baseurl: "/recipes"
+lang: en
+
+collections:
+  recipes:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope:
+      type: recipes
+    values:
+      layout: recipe
+
+exclude:
+  - README.md

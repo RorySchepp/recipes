@@ -1,0 +1,70 @@
+---
+layout: default
+title: Recipes
+---
+{% assign recipes = site.recipes | sort: 'title' %}
+{% assign cats = site.recipes | map: 'category' | compact | uniq | sort %}
+<header class="top">
+  <h1 class="index-title"># recipes</h1>
+</header>
+
+<div class="controls">
+  <div class="search">
+    <label for="q" class="muted">search:</label>
+    <input id="q" type="search" placeholder="name or ingredient" autocomplete="off">
+  </div>
+  <div class="filters" role="group" aria-label="Filter by category">
+    <button type="button" data-cat="all" aria-pressed="true">all</button>
+    {% for c in cats %}<button type="button" data-cat="{{ c | downcase }}" aria-pressed="false">{{ c | downcase }}</button>
+    {% endfor %}
+  </div>
+</div>
+
+<ul class="list" id="list">
+  {% for r in recipes %}
+  {% assign slug = r.title | downcase %}
+  <li data-cat="{{ r.category | downcase }}" data-search="{{ r.title | downcase | escape }} {{ r.content | strip_html | downcase | normalize_whitespace | escape }}">
+    <a href="{{ r.url | relative_url }}">{{ slug }}</a>
+    <span class="leader" aria-hidden="true"></span>
+    <span class="muted small">{{ r.category | downcase }}</span>
+  </li>
+  {% endfor %}
+</ul>
+<p class="muted" id="empty" hidden>no matches.</p>
+<p class="muted small" id="count"></p>
+
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var items = Array.prototype.slice.call(document.querySelectorAll('#list li'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filters button'));
+  var empty = document.getElementById('empty');
+  var count = document.getElementById('count');
+  var cat = 'all';
+  function update() {
+    var term = q.value.toLowerCase().trim();
+    var shown = 0;
+    items.forEach(function (li) {
+      var ok = (cat === 'all' || li.dataset.cat === cat) && (!term || li.dataset.search.indexOf(term) !== -1);
+      li.hidden = !ok;
+      if (ok) shown++;
+    });
+    empty.hidden = shown !== 0;
+    count.textContent = shown + (shown === 1 ? ' recipe' : ' recipes');
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      cat = b.dataset.cat;
+      buttons.forEach(function (x) {
+        var on = x === b;
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+        x.textContent = on ? '[' + x.dataset.cat + ']' : x.dataset.cat;
+      });
+      update();
+    });
+  });
+  buttons[0].textContent = '[all]';
+  q.addEventListener('input', update);
+  update();
+})();
+</script>

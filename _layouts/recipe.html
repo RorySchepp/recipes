@@ -1,0 +1,34 @@
+---
+layout: default
+---
+<article>
+  <nav class="top">
+    <a href="{{ '/' | relative_url }}">← recipes</a>
+    <span class="muted">{{ page.url | prepend: site.baseurl }}</span>
+  </nav>
+
+  <header class="recipe-head">
+    <h1>{{ page.title }}</h1>
+    {% if page.category %}<span class="muted">{{ page.category | downcase }}</span>{% endif %}
+    {% if page.blurb %}<p>{{ page.blurb }}</p>{% endif %}
+    {% assign parts = "" | split: "" %}
+    {% if page.prep %}{% capture p %}prep {{ page.prep }}{% endcapture %}{% assign parts = parts | push: p %}{% endif %}
+    {% if page.cook %}{% capture p %}cook {{ page.cook }}{% endcapture %}{% assign parts = parts | push: p %}{% endif %}
+    {% if page.oven %}{% capture p %}oven {{ page.oven }}{% endcapture %}{% assign parts = parts | push: p %}{% endif %}
+    {% if page.serves %}{% capture p %}serves {{ page.serves }}{% endcapture %}{% assign parts = parts | push: p %}{% endif %}
+    {% if parts.size > 0 %}<p class="muted meta">{{ parts | join: " · " }}</p>{% endif %}
+  </header>
+
+  <div class="recipe-body">
+{{ content }}
+  </div>
+
+  {% if page.source %}<footer class="muted small">source: {{ page.source }}</footer>{% endif %}
+</article>
+<script>
+  // Hide any section heading left empty (e.g. "## Notes" with nothing under it).
+  document.querySelectorAll('.recipe-body h2').forEach(function (h) {
+    var n = h.nextElementSibling;
+    if (!n || n.tagName === 'H2') h.remove();
+  });
+</script>
