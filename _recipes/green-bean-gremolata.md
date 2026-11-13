@@ -24,8 +24,7 @@ source:
 1. Blanch the green beans. Bring a large pot of water up to a boil
    and season with salt. Add the green beans and boil for 1–2
    minutes, just until the green beans are fork tender but al dente.
-   You don't want them too soft! Transfer to a bowl of ice water to
-   stop the cooking process.
+   Transfer to a bowl of ice water to stop the cooking process.
 2. Dry the green beans on paper towels and set aside.
 3. Make the gremolata. In a bowl mix together the garlic cloves,
    lemon zest and juice, cheese and one tablespoon of olive oil to
@@ -36,7 +35,6 @@ source:
    until the green beans are slightly blistered.
 5. Turn off the heat and mix in the gremolata to coat. Taste for
    seasoning and adjust as needed.
-6. Serve and enjoy!
 
 ## Notes
 
